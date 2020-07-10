@@ -1,6 +1,7 @@
 import shutil
 import pymongo
 from pymongo import MongoClient
+import pandas as pd
 import pprint
 import re
 
@@ -15,13 +16,17 @@ class pipeline():
 	def __init__(self,meta=None):
 		self.cluster = MongoClient("mongodb+srv://enihcam:12345@cluster0.irbss.mongodb.net/<News-Collect>?retryWrites=true&w=majority")
 		self.db = self.cluster["News-Collect"]
-		self.collection = self.db["News-Collect"]
+		self.collection = self.db["The-Guardian"]
 
 		if isinstance(meta,dict):
 			if(len(meta.keys()) == 2):
 				self.find(meta)
 			else:
-				self.get_bytitle(meta)
+				if('title' in meta.keys()):
+					self.get_bytitle(meta)
+				else:
+					pass
+
 		else:
 			self.navigate()
 
@@ -69,6 +74,7 @@ def interface():
 	print("Navigate through articles : press 1 ")
 	print("Find article by a keyword : press 2 ")
 	print("Find article by title : press 3")
+	print("Find article by date : press 4")
 
 	choice = input()
 	if (choice=='1'):
@@ -79,6 +85,10 @@ def interface():
 
 	elif (choice =='3'):
 		meta['title']= input("Please write a definitive title: ")
+
+	elif (choice =='4'):
+		date  = input("Please enter the date in the following format (d m year)")
+		meta['date'] = pd.to_datetime(date)
 	else:
 		meta = None
 		assert 'please specify a number between 1 and 2'
