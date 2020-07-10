@@ -7,10 +7,10 @@ on the database.</b>
 The code is written in python.</b>
 
 # Dependencies are: 
-1-Scrapy <\b>
-2-Pandas <\b>
-3-shutil
-4-re
+1-Scrapy </b>
+2-Pandas </b>
+3-shutil </b>
+4-re </b>
 
 
 # Screenshots 
