@@ -25,16 +25,25 @@ class pipeline():
 				if('title' in meta.keys()):
 					self.get_bytitle(meta)
 				else:
-					pass
+					self.get_bydate(meta)
 
 		else:
 			self.navigate()
 
 	def __print(self,article):
+		#to save lines of code
 		print(str(article['_id']).center(columns))
-		print(str(article['date']))
+		print('Article Section: '+str(article['nature']))
+		print('Article Date: '+str(article['date']))
+		print('\n')
 		print(article['article_text'])
 		print('\n')
+
+
+	def get_bydate(self,meta):
+		articles = self.collection.find({'date':{"lt":meta['date']}}).limit(5)
+		for article in articles:
+			self.__print(article)
 
 	def find(self,meta):
 		i=0
@@ -87,12 +96,13 @@ def interface():
 		meta['title']= input("Please write a definitive title: ")
 
 	elif (choice =='4'):
-		date  = input("Please enter the date in the following format (d m year)")
+		date  = input("Please enter the date in the following format (dd mm year): ")
 		meta['date'] = pd.to_datetime(date)
 	else:
 		meta = None
 		assert 'please specify a number between 1 and 2'
 
+	print('\n')
 	return meta
 
 if __name__ == '__main__':
