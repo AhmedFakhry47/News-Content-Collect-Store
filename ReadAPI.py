@@ -1,3 +1,6 @@
+'''
+API to read from the MongoDB
+'''
 import shutil
 import pymongo
 from pymongo import MongoClient
